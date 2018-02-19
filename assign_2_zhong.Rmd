@@ -1,0 +1,573 @@
+---
+title: "STAT 542 Homework # 2 "
+author: "Wei Zhong (NetID: wzhong8)"
+date: "Oct 6th, 2017"
+header-includes:
+   - \usepackage{bbm}
+   - \usepackage{physics}
+   - \usepackage{amsmath}
+   - \usepackage{graphics}
+   - \usepackage{footnote}
+   - \usepackage[flushleft]{threeparttable}
+   - \usepackage{array}
+output: 
+   pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+### a) Fit the best subset selection to the dataset and report the best model of each size.
+
+The best model of each size is shown in the following Table \ref{best}. Each column represents a variable and each row refers to the size of the model. An asterisk indicates that a given variable is included in the corresponding model. For example, when the size of model is four, the best subset selection of variables include btc_market_cap, btc_hash_rate, btc_miners_revenue and btc_cost_per_transaction.
+
+
+
+\begin{table}[!htbp] \centering 
+  \caption{The best subset selection of each size} 
+  \label{best} 
+  \begin{threeparttable}
+   \resizebox{\columnwidth}{!}{
+\begin{tabular}{@{\extracolsep{5pt}} cccccccccccccccccccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & 1v & 2v & 3v & 4v & 5v & 6v & 7v & 8v & 9v & 10v & 11v & 12v & 13v & 14v & 15v & 16v & 17v & 18v & 19v & 20v & 21v \\
+\hline \\[-1.8ex] 
+1s &   & \textasteriskcentered  &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   \\ 
+2s &   & \textasteriskcentered  &   &   &   &   &   &   & \textasteriskcentered  &   &   &   &   &   &   &   &   &   &   &   &   \\ 
+3s &   & \textasteriskcentered  &   &   &   &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   &   &   &   &   &   &   &   &   &   &   \\ 
+4s &   & \textasteriskcentered  &   &   &   &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   &   &   &   \\ 
+5s &   & \textasteriskcentered  & \textasteriskcentered  &   &   &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   &   &   &   &   & \textasteriskcentered  &   &   &   &   &   \\ 
+6s &   & \textasteriskcentered  & \textasteriskcentered  &   &   &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   \\ 
+7s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   \\ 
+8s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   \\ 
+9s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   \\ 
+10s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   \\ 
+11s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   \\ 
+12s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   & \textasteriskcentered  \\ 
+13s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   &   &   &   & \textasteriskcentered  \\ 
+14s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   &   &   & \textasteriskcentered  \\ 
+15s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   &   & \textasteriskcentered  \\ 
+16s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  \\ 
+17s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  \\ 
+18s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  \\ 
+19s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  \\ 
+20s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  \\ 
+21s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  \\ 
+\hline \\[-1.8ex] 
+\end{tabular} }
+\begin{tablenotes}
+\footnotesize
+\item[a] The column names 1v-21v represents the following variables respectively: btc total bitcoins, btc market cap, btc blocks size,\\
+btc avg block size, btc n orphaned blocks, btc n transactions per block,
+btc median confirmation time, btc hash rate, \\
+btc difficulty, btc miners revenue, btc transaction fees, btc cost per transaction percent, btc cost per transaction, \\
+btc n unique addresses, btc n transactions, btc n transactions total, 
+btc n transactions excluding popular, \\
+btc n transactions excluding chains longer than 100, btc output volume, btc estimated transaction volume, \\
+btc estimated transaction volume usd.
+\item[b] The row names 1s-21s represents the size of the model respectively. For example, 1s means one variable in the model, \\
+and 21s means the full model.
+\end{tablenotes}
+\end{threeparttable}
+\end{table} 
+
+### b) Use Cp, AIC and BIC criteria to select the best model and report the result from each. Apply the fitted models to the testing dataset and report the prediction error $\sqrt{\frac{1}{n_{test}} \sum_{i \in test} (\hat{Y_i}- Y_i)^2}$.
+
+Using Cp criteria, the best model includes variables: btc_total_bitcoins, btc_market_cap, btc_blocks_size, btc_avg_block_size, btc_n_orphaned_blocks, btc_hash_rate, btc_difficulty, btc_miners_revenue, btc_transaction_fees, btc_cost_per_transaction and btc_n_transactions_total.
+
+Using AIC criteria, the best model includes variables: btc_total_bitcoins, btc_market_cap, btc_blocks_size, btc_avg_block_size, btc_n_orphaned_blocks, btc_hash_rate, btc_difficulty, btc_miners_revenue, btc_transaction_fees, btc_cost_per_transaction and btc_n_transactions_total.
+
+Using BIC criteria, the best model includes variables: btc_total_bitcoins, btc_market_cap          btc_blocks_size, btc_avg_block_size, btc_n_orphaned_blocks, btc_hash_rate, btc_difficulty, btc_miners_revenue, btc_cost_per_transaction and btc_n_transactions_total.
+
+After applying the fitted models to the testing dataset, we get the prediction error of Cp, AIC and BIC as following: 208.5804 (Cp), 208.5804 (AIC) and 210.3223 (BIC).
+
+### c) Redo (a) and (b) using $\log(1 + Y)$ as the outcome. Report the best models. Then for prediction, transform the predicted values into the original scale and report the prediction error of each model.
+
+Redo part (a) using $\log(1+Y)$, we have the best model of each size is shown in the following Table \ref{best_log}. Similar to Table \ref{best}, each column represents a variable and each row refers to the size of the model. An asterisk indicates that a given variable is included in the corresponding model. For example, when the size of model is four, the best subset selection of variables include btc_total_bitcoins, btc_blocks_size, btc_cost_per_transaction, and btc_n_transactions_total.
+
+
+\begin{table}[!htbp] \centering 
+  \caption{The best subset selection of each size by using log(1+Y)} 
+  \label{best_log} 
+  \begin{threeparttable}
+  \resizebox{\columnwidth}{!}{
+\begin{tabular}{@{\extracolsep{5pt}} cccccccccccccccccccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & 1v & 2v & 3v & 4v & 5v & 6v & 7v & 8v & 9v & 10v & 11v & 12v & 13v & 14v & 15v & 16v & 17v & 18v & 19v & 20v & 21v \\
+\hline \\[-1.8ex] 
+1s & \textasteriskcentered  &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   &   \\ 
+2s & \textasteriskcentered  &   &   &   &   &   &   &   &   & \textasteriskcentered  &   &   &   &   &   &   &   &   &   &   &   \\ 
+3s & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   &   &   &   & \textasteriskcentered  &   &   &   &   &   &   &   &   \\ 
+4s & \textasteriskcentered  &   & \textasteriskcentered  &   &   &   &   &   &   &   &   &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   \\ 
+5s & \textasteriskcentered  &   & \textasteriskcentered  &   &   &   &   &   & \textasteriskcentered  &   &   &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   \\ 
+6s & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   &   &   &   & \textasteriskcentered  &   &   &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   \\ 
+7s & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   &   &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   \\ 
+8s & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  &   &   & \textasteriskcentered  &   &   &   &   &   \\ 
+9s & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   &   &   &   &   \\ 
+10s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   &   &   &   &   \\ 
+11s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   &   &   &   & \textasteriskcentered  \\ 
+12s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  &   &   & \textasteriskcentered  \\ 
+13s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  \\ 
+14s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  \\ 
+15s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  \\ 
+16s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  \\ 
+17s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  \\ 
+18s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  \\ 
+19s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  \\ 
+20s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  &   & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  \\ 
+21s & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  & \textasteriskcentered  \\ 
+\hline \\[-1.8ex] 
+\end{tabular} }
+\begin{tablenotes}
+\footnotesize
+\item[a] The column names 1v-21v represents the following variables respectively: btc total bitcoins, btc market cap, btc blocks size,\\
+btc avg block size, btc n orphaned blocks, btc n transactions per block,
+btc median confirmation time, btc hash rate, \\
+btc difficulty, btc miners revenue, btc transaction fees, btc cost per transaction percent, btc cost per transaction, \\
+btc n unique addresses, btc n transactions, btc n transactions total, 
+btc n transactions excluding popular, \\
+btc n transactions excluding chains longer than 100, btc output volume, btc estimated transaction volume, \\
+btc estimated transaction volume usd.
+\item[b] The row names 1s-21s represents the size of the model respectively. For example, 1s means one variable in the model, \\
+and 21s means the full model.
+\end{tablenotes}
+\end{threeparttable}
+\end{table} 
+
+By using $\log(1+Y)$, the best model based on Cp criteria includes 14 variables: btc_total_bitcoins, btc_market_cap, btc_blocks_size, btc_avg_block_size, btc_median_confirmation_time, btc_difficulty, btc_transaction_fees, btc_cost_per_transaction, btc_n_unique_addresses, btc_n_transactions_total, btc_n_transactions_excluding_chains_longer_than_100, btc_output_volume, btc_estimated_transaction_volume
+and btc_estimated_transaction_volume_usd.
+
+The best model based on AIC criteria also has 14 variables: btc_total_bitcoins, btc_market_cap, btc_blocks_size, btc_avg_block_size, btc_median_confirmation_time, btc_difficulty, btc_transaction_fees, btc_cost_per_transaction, btc_n_unique_addresses, btc_n_transactions_total, btc_n_transactions_excluding_chains_longer_than_100,
+btc_output_volume, btc_estimated_transaction_volume and btc_estimated_transaction_volume_usd.
+
+The best model based on BIC criteria has 11 variables: btc_total_bitcoins, btc_market_cap, btc_blocks_size, btc_avg_block_size, btc_median_confirmation_time, btc_difficulty, btc_transaction_fees, btc_cost_per_transaction, btc_n_unique_addresses btc_n_transactions_total, btc_estimated_transaction_volume_usd.
+
+After transforming the predicted value into original scale, we have the prediction error for Cp, AIC and BIC as following: 2120.354, 2120.354 and 2084.011.
+
+```{r, eval=FALSE}
+rm(list = ls())
+setwd("/Users/rociozhong/Library/Mobile Documents/com~apple~CloudDocs/STAT_542")
+input = read.csv("bitcoin_dataset.csv", header = T, sep = ",")
+n = dim(input)[1] - 2
+
+input = input[c(1 : n), ]
+
+# add new variables
+library(lubridate)  # for "datetime"
+
+input$day= as.numeric(as.character(as.factor(day(input$Date))))
+input$year = as.numeric(as.character(as.factor(year(input$Date))))
+input$month = as.numeric(as.character(as.factor(month(input$Date))))
+
+# ignore the variable "btc_trade_volume"
+input = input[, -which(colnames(input) == "btc_trade_volume")]
+input = na.omit(input)
+
+# the training dataset is ANY information prior to 1/1/2017
+library(dplyr)
+
+traindata = input %>% filter(year < 2017)
+
+m = dim(traindata)[2]
+#colyear = which(colnames(traindata) == "year")
+traindata = traindata[, -c(1, c((m-2): m))]
+#traindata = traindata[, -1]
+# test data of btc_mark_price from 01/01/2017 - 09/12/2017
+testdata = input %>% filter(year >= 2017)
+testdata = testdata[, -c(1, c((m-2): m))]
+
+# fit a full linear model on training data, y = btc_market_price 
+fullmodel = lm(btc_market_price ~ ., data = traindata)
+
+# AIC
+library(leaps)
+
+n1 = dim(traindata)[1]
+#p = dim(traindata)[2] 
+
+regfit.full = regsubsets(btc_market_price ~ ., data = traindata, nvmax = 21)
+
+# An asterisk indicates that a given variable is included in the corresponding model
+# display the table in latex
+optimal_sub = summary(regfit.full)$outmat 
+table1 = cbind(seq(1,21, 1), optimal_sub)
+#stargazer(table1, summary = F, rownames = F)
+
+# variable names
+rs = summary(regfit.full, matrix = T)
+names(rs)
+msize = apply(rs$which, 1, sum)
+
+# Cp
+Cp = (rs$rss) / (summary(fullmodel)$sigma^2) + 2 * msize - n1
+rs$which[which.min(Cp), ]
+
+# variables chosed by Cp
+temp_cp = rs$which[which.min(Cp), ]
+var_cp = which(temp_cp == TRUE)
+
+# use Cp variables to fit a linear model
+dta_cp = traindata[, var_cp]
+fit_cp = lm(btc_market_price ~., data = dta_cp)
+summary(fit_cp)
+
+# prediction error by cp
+n_test = dim(testdata)[1]
+test_cp = testdata[, var_cp]
+yhat_cp = predict(fit_cp, data.frame(test_cp[, -1]))
+error_cp = 1/n_test * sum((yhat_cp - test_cp[, 1])^2)
+sqrt(error_cp)
+
+# AIC
+aic = n1 * log(rs$rss/n1) + 2 * msize
+
+# variables chosed by AIC
+temp_aic = rs$which[which.min(aic), ]
+
+# use those variables to fit a linear model
+var_aic = which(temp_aic == TRUE)
+dta_aic = traindata[, var_aic]
+fit_aic = lm(dta_aic$btc_market_price ~., data  = dta_aic)
+summary(fit_aic)
+
+# prediction error based on testdata using aic
+test_aic = testdata[, var_aic]
+yhat_aic = predict(fit_aic, data.frame(test_aic[, -1]))
+error_aic = (1/n_test) * sum((yhat_aic - test_aic[, 1])^2)
+sqrt(error_aic)
+
+# BIC 
+bic = n1 * log(rs$rss/n1) + msize * log(n1)
+rs$which[which.min(bic), ]
+
+# variables chosed by BIC
+temp_bic = rs$which[which.min(bic), ]
+
+# use those variables to fit a linear model
+var_bic = which(temp_bic == TRUE)
+dta_bic = traindata[, var_bic]
+fit_bic = lm(dta_bic$btc_market_price ~., data  = dta_bic)
+summary(fit_bic)
+
+# prediction error based on testdata using bic
+test_bic = testdata[, var_bic]
+yhat_bic = predict(fit_bic, data.frame(test_bic[, -1]))
+error_bic = (1/n_test) * sum((yhat_bic - test_bic[, 1])^2)
+sqrt(error_bic)
+
+####################################################
+# repeat the process using log(1 + Y) as the outcome
+
+traindata$logy = log(1 + traindata$btc_market_price)
+testdata$logy = log(1 + testdata$btc_market_price)
+
+# redo part (a)
+regfit.full.log = regsubsets(logy ~ ., data = traindata[, -1], nvmax = 21)
+summary(regfit.full.log)
+optimal_sublog = summary(regfit.full.log)$outmat
+table2 = cbind(seq(1, 21, 1), optimal_sublog)
+  
+  
+# redo part (b)
+fullmodel_log = lm(logy ~ ., data = traindata[, -1])
+rs_log = summary(regfit.full.log, matrix = T)
+names(rs_log)
+
+# Cp for log(1+y)
+Cp_log = (rs_log$rss) / (summary(fullmodel_log)$sigma^2) + 2 * msize - n1
+rs_log$which[which.min(Cp_log), ]
+
+# variables chosed by Cp
+temp_cp_log = rs_log$which[which.min(Cp_log), ]
+var_cp_log = which(temp_cp_log == TRUE)
+
+# use Cp variables to fit a linear model
+dta_cp_log = traindata[, c(var_cp_log[-1], ncol(traindata))]
+fit_cp_log = lm(logy ~., data = dta_cp_log)
+summary(fit_cp_log)
+
+# prediction error by cp
+n_test = dim(testdata)[1]
+test_cp_log = testdata[, c(var_cp_log[-1], ncol(testdata))]
+yhat_cp_log = predict(fit_cp_log, data.frame(test_cp_log[, -ncol(test_cp_log)]))
+transform_yhat_cp = exp(yhat_cp_log) - 1
+error_cp_rep = 1/n_test * sum((transform_yhat_cp - test_cp[, 1])^2)
+sqrt(error_cp_rep)
+
+# AIC for log(1+ y)
+aic_log = n1 * log(rs_log$rss/n1) + 2 * msize
+
+# variables chosed by AIC
+temp_aic_log = rs_log$which[which.min(aic_log), ]
+
+# use those variables to fit a linear model
+var_aic_log = which(temp_aic_log == TRUE)
+dta_aic_log = traindata[, c(var_aic_log[-1], ncol(traindata))]
+fit_aic_log = lm(logy~., data  = dta_aic_log)
+summary(fit_aic_log)
+
+# prediction error based on testdata using aic
+test_aic_log = testdata[, c(var_aic_log[-1], ncol(testdata))]
+yhat_aic_log = predict(fit_aic_log, data.frame(test_aic_log[, -ncol(test_aic_log)]))
+transform_yhat_aic = exp(yhat_aic_log) - 1
+error_aic_rep = (1/n_test) * sum((transform_yhat_aic - test_aic[, 1])^2)
+sqrt(error_aic_rep)
+
+# BIC  using log(1+y)
+bic_log = n1 * log(rs_log$rss/n1) + msize * log(n1)
+rs_log$which[which.min(bic_log), ]
+
+# variables chosed by BIC
+temp_bic_log = rs_log$which[which.min(bic_log), ]
+
+# use those variables to fit a linear model
+var_bic_log = which(temp_bic_log == TRUE)
+dta_bic_log = traindata[, c(var_bic_log[-1], ncol(traindata))]
+fit_bic_log = lm(logy ~., data  = dta_bic_log)
+summary(fit_bic_log)
+
+# prediction error based on testdata using bic
+test_bic_log = testdata[,  c(var_bic_log[-1], ncol(testdata))]
+yhat_bic_log = predict(fit_bic_log, data.frame(test_bic_log[, -ncol(test_bic_log)]))
+transform_yhat_bic = exp(yhat_bic_log)  - 1
+error_bic_rep = (1/n_test) * sum((transform_yhat_bic - test_bic[, 1])^2)
+sqrt(error_bic_rep)
+```
+
+
+## Question 2
+### Part I: Complete the Lasso fitting code.
+
+After finishing the my lasso function, I check it by using glmnet package. The distance is pretty small: 0.002058255, and 0.001375829. The code is as below.
+
+### Part II: Use your finished code to fit the Lasso model to the bitcoin dataset. Simply fit the training data with a sequence of lambda values, then report the testing errors of them on the testing dataset, and report the best model. Use properly labeled graphs if necessary.
+
+The testing errors based on 73 different lambdas are:
+```r
+ [1] 2157.51784 1937.87606 1736.97309 1553.91900 1387.12834 1235.15654 1096.68743  970.52182
+ [9]  861.23668  778.77659  703.65968  635.23582  572.91297  516.15208  464.46249  417.39769
+[17]  374.55156  335.55494  300.07253  267.80017  238.46243  211.81054  187.62061  165.69231
+[25]  145.84793  127.93194  111.81121   97.13924   81.64911   67.88173   55.83933   45.61625
+[33]   37.44005   31.68291   28.71456   28.51956   30.48851   33.76852   37.67550   41.78613
+[41]   45.86642   49.79398   53.50841   56.98352   60.21214   63.19765   65.94930   68.47938
+[49]   70.80166   72.93037   74.87963   76.66314   83.30918   92.67152  101.30061  109.35921
+[57]  116.83097  123.72666  130.07095  135.89531  141.23401  146.12191  150.59317  154.68054
+[65]  158.46932  163.03918  168.02231  172.65174  176.87290  180.72130  184.22954  187.41244
+[73]  190.29681
+```
+
+When lambda is 9.552801, it gives the smallest testing error 28.51956, as shown in the figure below. And the corresponding beta including intercept are:
+```r
+5.687157e+00 0.000000e+00 5.462668e-08 0.000000e+00 0.000000e+00 0.000000e+00 0.000000e+00 
+                                                                                           
+0.000000e+00 0.000000e+00 0.000000e+00 4.257886e-05 0.000000e+00 0.000000e+00 1.076872e+00 
+                                                                                           
+0.000000e+00 0.000000e+00 0.000000e+00 0.000000e+00 0.000000e+00 0.000000e+00 0.000000e+00 
+             
+0.000000e+00 
+```
+Thus the best model includes 3 variables: 5.687157 + (5.462668e-08) btc_market_cap +  (4.257886e-05)btc_miners_revenue + (1.076872) btc_cost_per_transaction.
+
+\includegraphics{bitplot.pdf}
+
+
+```{r lasso, eval=F}
+library(MASS)
+library(glmnet)
+set.seed(1)
+N = 400
+P = 20
+
+Beta = c(1:5/5, rep(0, P-5))
+Beta0 = 0.5
+
+# genrate X
+V = matrix(0.5, P, P)
+diag(V) = 1
+
+X = as.matrix(mvrnorm(N, mu = 3*runif(P)-1, Sigma = V))
+
+# create artifical scale of X
+X = sweep(X, 2, 1:10/5, "*")
+
+# genrate Y
+y = Beta0 + X %*% Beta + rnorm(N)
+
+# check OLS
+lm(y ~ X)
+
+# now start the Lasso 
+# First we scale and center X, and record them.
+# Also center y and record it. dont scale it. 
+# now since both y and X are centered at 0, we don't need to worry about the intercept anymore. 
+# this is because for any beta, X %*% beta will be centered at 0, so no intercept is needed. 
+# However, we still need to recover the real intercept term after we are done estimating the beta. 
+# The real intercept term can be recovered by using the x_center, x_scale, y2, and the beta parameter you estimated.
+
+x_center = colMeans(X)
+x_scale = apply(X, 2, sd)
+X2 = scale(X)
+
+bhat = rep(0, ncol(X2)) # initialize it
+ymean = mean(y)
+y2 = y - ymean
+
+# now start to write functions 
+# prepare the soft thresholding function (should be just one line, or a couple of)
+
+soft_th <- function(b, pen)
+{
+  return( sign(b) * max(abs(b) - pen, 0) )
+}
+
+# initiate lambda. This is one way to do it, the logic is that I set the first lambda as the largetst gradient. 
+
+#lambda = exp(seq(log(max(abs(cov(X2, y2)))), log(0.001), length.out = 100))
+lambda = glmnet(X, y)$lambda
+
+LassoFit <- function(myX, myY, mybeta, mylambda, tol = 1e-10, maxitr = 500, N)
+{
+	# initia a matrix to record the objective function value
+	f = rep(0, maxitr)
+	
+	for (k in 1:maxitr)
+	{
+		# compute residual
+		r = myY - myX %*% mybeta
+		
+		# I need to record the residual sum of squares
+		f[k] = mean(r*r)
+		
+		for (j in 1:ncol(myX))
+		{
+			# add the effect of jth variable back to r 
+			# so that the residual is now the residual after fitting all other variables
+		  tmp_beta = mybeta
+		  tmp_beta[j] = 0
+			rj = myY - myX %*% tmp_beta
+			
+			# apply the soft thresholding function to the ols estimate of the jth variable 
+			mybeta[j] = soft_th(sum(rj * myX[, j]), mylambda * N) / sum(myX[, j] * myX[, j])
+		}
+		if (k > 10)
+		{
+			# this is just my adhoc way of stoping rule, you dont have to use it
+			if (sum(abs(f[(k-9):k] - mean(f[(k-9):k]))) < tol) break;
+		}
+	}
+	return (mybeta)
+}
+
+# test your function on a large lambda (penalty) level. 
+# this should produce a very spase model. 
+# these are not the beta in the original scale of X
+
+LassoFit(X2, y2, mybeta = rep(0, ncol(X2)), mylambda = lambda[10], tol = 1e-7, maxitr = 500, N = nrow(X))
+
+# now initiate a matrix that records the fitted beta for each lambda value 
+
+beta_all = matrix(NA, ncol(X), length(lambda))
+
+# this vecter stores the intercept of each lambda value
+beta0_all = rep(NA, length(lambda))
+
+# initial a zero vector for bhat, 
+# then throw that into the fit function using the largest lambda value. 
+# that will return the fitted beta, then use this beta on the next (smaller) lambda value
+# iterate until all lambda values are used
+
+bhat = rep(0, ncol(X2)) # initialize it
+
+for (i in 1:length(lambda)) # loop from the largest lambda value
+{
+	bhat = LassoFit(X2, y2, bhat, lambda[i], N = nrow(X))
+	
+	# data is scaled, figure out how to scale that back 
+	# save the correctly scaled beta into the beta matrix 
+	
+	beta_all[, i] = diag(1 / x_scale) %*% bhat
+	
+	# recalculte the intercept term in the original, uncentered and unscaled X
+
+	beta0_all[i] = ymean - as.numeric(x_center %*% beta_all[, i])
+}
+
+# now you have the coefficient matrix 
+# each column correspond to one lambda value 
+rbind("intercept" = beta0_all, beta_all)
+
+
+# you should include a similar plot like this in your report
+# feel free to make it look better
+matplot(colSums(abs(beta_all)), t(beta_all), type="l")
+
+# this plot should be identical (close) to your previous plot
+plot(glmnet(X, y))
+
+# set your lambda to their lambda value and rerun your algorithm 
+lambda = glmnet(X, y)$lambda
+
+# then this distance should be pretty small 
+# my code gives distance no more than 0.01
+max(abs(beta_all - glmnet(X, y)$beta))
+max(abs(beta0_all - glmnet(X, y)$a0))
+
+####################### PART II ##########################
+# use bitcoin traindata
+# demeaning of market_price: y in bitcoin
+bit_y2 = as.matrix(traindata$btc_market_price - mean(traindata$btc_market_price))
+
+bit_X2 = scale(traindata[, -c(1, ncol(traindata))])
+bit_lambda = exp(seq(log(max(abs(cov(bit_X2, bit_y2)))), log(0.001), length.out = 100))
+
+# create lambda using glmnet
+bit_lambda1 = glmnet(as.matrix(traindata[, -c(1, ncol(traindata))]), traindata$btc_market_price)$lambda
+lassofit_bit = glmnet(as.matrix(traindata[, -c(1, ncol(traindata))]), 
+                      traindata$btc_market_price)
+
+bit_x_center = colMeans(traindata[, -c(1, ncol(traindata))])
+bit_x_scale = apply(traindata[, -c(1, ncol(traindata))], 2, sd)
+
+#initiate a matrix that records the fitted beta for each lambda value 
+bit_beta_all = matrix(NA, nrow = 21, ncol = length(bit_lambda1)) 
+
+# store intercept of each lambda value
+bit_beta0_all = rep(NA, length(bit_lambda1)) 
+
+bit_bhat = rep(0, 21)
+
+for(i in 1: length(bit_lambda1)){
+     bit_bhat = LassoFit(bit_X2, bit_y2, bit_bhat, bit_lambda1[i], N = nrow(traindata))
+     bit_beta_all[, i] = diag(1 / bit_x_scale) %*% bit_bhat
+     bit_beta0_all[i] = 
+       mean(traindata$btc_market_price) - as.numeric(bit_x_center %*% bit_beta_all[, i]) 
+     }
+  
+beta_result = rbind("intercept" = bit_beta0_all, bit_beta_all) # each col represent beta for a lambda 
+
+# use beta on testdata 
+test_x = testdata[, -c(1, ncol(testdata))]
+designx = as.matrix(cbind(rep(1, nrow(test_x)), test_x))
+
+
+bit_test_error = rep(0, length(bit_lambda1))
+for(i in 1: length(bit_lambda1)){
+  bit_test_error[i] = 
+    sqrt(sum((testdata$btc_market_price - designx %*% beta_result[, i])^2)/nrow(test_x))
+}
+
+# which lambda gives the smallest test error
+bit_lambda1[which.min(bit_test_error)]
+plot(x = bit_lambda1, y = bit_test_error)
+
+# which beta gives the smallest test error
+beta_result[, which.min(bit_test_error)]
+
+# check result using glmnet
+max(abs(bit_beta_all - lassofit_bit$beta))
+max(abs(bit_beta0_all - lassofit_bit$a0))
+```
