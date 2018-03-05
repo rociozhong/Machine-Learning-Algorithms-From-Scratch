@@ -1,5 +1,6 @@
 
 #################### question 1 #########################
+## Write my own code to fit a Nadaraya-Watson kernel regression estimator for a one dimensional problem.
 rm(list = ls())
 require(graphics)
 summary(faithful)
@@ -94,76 +95,9 @@ video_function(x = mydta$Critic_Count) # bandwidth = 4.200000, cv = 0.164162
 
 video_function(x = mydta$User_Score) # bandwidth = 0.2, cv = 0.2009796
 
-##################### question 2 part a ######################
-rm(list = ls())
-library(randomForest)
-N = 200
-P = 4
-set.seed(2)
-X = matrix(rnorm(N * P, mean = 0, sd = 1), N, P) 
 
-fittedy = matrix(0, nrow = N, ncol = 20) 
-truey = matrix(0, nrow = N, ncol = 20) 
-
-rf.fun = function(p, q){
-for (i in 1: 20){
-  truey1 = 1 + 0.5 * apply(X, 1, sum) + rnorm(N)
-  rf.fit = randomForest(X, truey1, mtry = p, nodesize = q, xtest = X, ytest = truey1)
-  fittedy[, i] = rf.fit$predicted
-  truey[, i] = as.vector(truey1)
-}
-  return (list(fittedy = fittedy, truey = truey))
-}
-
-sample_cov = function(x, y){
-  n_samples = nrow(X)
-  scale_factor = (n_samples - 1) / n_samples
-  scale_factor * cov(x, y)
-}
-
-# mtry = 1, nodesize = 20
-sum(mapply(sample_cov, as.data.frame(rf.fun(p = 1, q = 20)$truey), as.data.frame(rf.fun(p = 1, q = 20)$fittedy)))
-# mtry = 1, nodesize = 30
-sum(mapply(sample_cov, as.data.frame(rf.fun(p = 1, q = 30)$truey), as.data.frame(rf.fun(p = 1, q = 30)$fittedy)))
-# mtry = 1, nodesize = 40
-sum(mapply(sample_cov, as.data.frame(rf.fun(p = 1, q = 40)$truey), as.data.frame(rf.fun(p = 1, q = 40)$fittedy)))
-
-
-
-# mtry = 3, nodesize = 20
-sum(mapply(sample_cov, as.data.frame(rf.fun(p = 3, q = 20)$truey), as.data.frame(rf.fun(p = 3, q = 20)$fittedy)))
-# mtry = 3, nodesize = 30
-sum(mapply(sample_cov, as.data.frame(rf.fun(p = 3, q = 30)$truey), as.data.frame(rf.fun(p = 3, q = 30)$fittedy)))
-# mtry = 3, nodesize = 40
-sum(mapply(sample_cov, as.data.frame(rf.fun(p = 3, q = 40)$truey), as.data.frame(rf.fun(p = 3, q = 40)$fittedy)))
-
-# increase nodesize, decreases the df; increase the mtry, increases the df.
-############ part b ###########
-rm(list = ls())
-N = 200
-P = 4
-set.seed(2)
-X = matrix(rnorm(N * P, mean = 0, sd = 1), N, P) 
-
-fittedy = matrix(0, nrow = N, ncol = 20) 
-truey = matrix(0, nrow = N, ncol = 20) 
-
-ntree.fun = function(z){
-  for (i in 1: 20){
-    truey1 = 1 + 0.5 * apply(X, 1, sum) + rnorm(N)
-    rf.fit = randomForest(X, truey1, ntree = z, xtest = X, ytest = truey1)
-    fittedy[, i] = rf.fit$predicted
-    truey[, i] = as.vector(truey1)
-  }
-  return (list(fittedy = fittedy, truey = truey))
-}
-
-
-mean((ntree.fun(500)$fittedy - mean(ntree.fun(500)$fittedy))^2)
-mean((ntree.fun(800)$fittedy - mean(ntree.fun(800)$fittedy))^2)
-mean((ntree.fun(1000)$fittedy - mean(ntree.fun(1000)$fittedy))^2)
-
-################  question 3 part a ###################
+###################################
+## write my own code for a one-dimensional adaboost using a stump model as the weak learner.
 rm(list = ls())
 
 # a stump model, with weights
