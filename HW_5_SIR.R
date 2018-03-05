@@ -1,3 +1,7 @@
+# Write my own code to fit the sliced inverse regression, validate it by
+# comparing to the “dr” package. Use use 10 as the number of slices.
+
+
 rm(list = ls())
 
 # response variable y 
@@ -81,7 +85,10 @@ fun_sir(x, y, 10)$ev$vector
 fit_sir2 = dr(y ~., data = data.frame(x, y), method = "sir", nslices = 10)
 
 
-#################### question 3 ###########################t
+#################### question 3 ###########################
+## predict the movie, "Star Wars: the Last Jedi" box office and whether its vote average is greater than 7.  
+## the dataset is from https://www.kaggle.com/tmdb/tmdb-movie-metadata
+                     
 rm(list = ls())
 getwd()
 setwd("/Users/rociozhong/Library/Mobile Documents/com~apple~CloudDocs/STAT_542")
