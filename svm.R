@@ -1,3 +1,6 @@
+# Install the quadprog package and utilize the function solve.QP to solve SVM.
+
+
 rm(list = ls())
 # install.packages("quadprog")
 library(quadprog)
@@ -56,8 +59,8 @@ primalline = c(- results$solution[1] / results$solution[3],  - results$solution[
 
 
 
-################################ question 1 (b) ######################################
-
+######################################################################
+# try using the dual form of linear separable SVM
 # dual form of linear separable SVM
 # build the system matrices
 D = t(Q) %*% Q
@@ -111,7 +114,9 @@ abline(a = primalline[1], b = primalline[2], col = "yellow", lty = 3, lwd = 2)
 plotMargin(w = c(0.933874, 0.3844957), b = - svm.fit$rho) + geom_point(data = df, aes(x = V1, y = V2, color = as.factor(V3))) + 
 labs(title = "Using e1071 package")
 
-################################ question 1 (c) ######################################
+######################################################################
+# Generate a set of nonseparable data
+# Formulate the dual form of linear SVM so that it can be solved by solve.QP.
 
 # nonseparable SVM
 # using solve.QP on dual form
@@ -326,84 +331,6 @@ b = -svm.fit_heart$rho
 # show results in table
 library(xtable)
 tbl_e1071 = xtable(t(w), digits = 9)
-
-
-
-################## Question 3 ########################
-rm(list = ls())
-getwd()
-setwd("/Users/rociozhong/Library/Mobile Documents/com~apple~CloudDocs/STAT_542")
-shooting = read.csv("Mass Shootings Dataset Ver 2.csv", header = T, sep = ",", na.strings=c("","NA"))
-
-# Any correlation with calendar dates? Do we have more deadly days, weeks or months on average
-head(shooting)
-dta = shooting[, c("Date", "Fatalities", "Injured", "Total.victims")]  #"Gender", "Race", "Gender", "Latitude", "Longitude")]
-
-# dta[ dta == "Unknown"] <- NA
-# dta[ dta == "unknown"] <- NA
-# dta[ dta == "Unclear"] <- NA
-# dta$Gender[dta$Gender == "M"] = "Male"
-# dta$central = ifelse(dta$Longitude < -90 & dta$Longitude > -110, 1, 0)
-# dta$male = ifelse(dta$Gender == "Male", 1, 0)
-# dta$white = ifelse(grepl("White", dta$Race) == TRUE, 1, 0)
-
-
-dta = na.omit(dta)
-str(dta)
-
-
-# add new variables
-dta$time = as.Date(as.factor(dta$Date), format = "%m/%d/%Y")
-
-
-library(lubridate)  # for "datetime"
-
-dta$day= as.numeric(as.character(as.factor(day(dta$time))))
-dta$year = as.numeric(as.character(as.factor(year(dta$time))))
-dta$month = as.numeric(as.character(as.factor(month(dta$time))))
-
-# data visualization
-library(dplyr)
-by_year = group_by(dta, year)
-shot_year = summarise(by_year, shooting = n(), vic = sum(Total.victims), inj = sum(Injured), fat = sum(Fatalities))
-
-library(reshape2)
-year_melt = melt(shot_year, id = "year", measure = c("vic", "fat"))
-ggplot(year_melt, aes(x = year, y = value, fill = variable)) + geom_bar(stat = "identity", position = "dodge") # vic, inj, fat per year
-ggplot(shot_year, aes(x = year, y = shooting)) + geom_bar(stat = "identity") + scale_x_continuous(breaks = seq(min(shot_year$year), max(shot_year$year), by = 3)) # shooting per year
-
-# add a new variable weekday, weekday = 1, weekend = 0
-# library(chron)
-# dta$wdy = ifelse(is.weekend(dta$time) == FALSE, 1, 0)
-
-# add a new variable that differentiates year before 2000 and year after 2000
-dta$later2000 = ifelse(dta$year > 2000, 1, -1)
-dta$later2000 = factor(dta$later2000)
-
-
-# remove the outlier
-dta = dta[-1, ]
-plot(c(dta$Injured, dta$Fatalities), col=ifelse(as.numeric(as.character(dta$later2000)) > 0, "red", "blue"), 
-     pch = 19, cex = 1.2, lwd = 2, xlab = "X1", ylab = "X2", cex.lab = 1.5)
-
-
-
-x = cbind(dta$Injured, dta$Fatalities)
-y = dta$later2000
-mydta = data.frame(y = y, x = x)
-colnames(mydta) = c("y", "x1", "x2")
-
-svm.fit = svm(y ~., data = mydta, gamma=10, cost=10)
-
-
-pred = predict(svm.fit, mydta[, -1])
-table(pred, mydta[, 1])
-
-# Compute accuracy
-sum(pred==y)/length(y)
-
-
-
 
 
 
