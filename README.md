@@ -3,7 +3,7 @@
 ## Lasso
 
 ```tex
-\sum_{x=0}^n f(x)
+$\sum_{x=0}^n f(x)$
 ```
 
 ## Support Vector Machine
