@@ -15,9 +15,11 @@ I consider just the Gaussian kernel function, and include a tuning parameter for
 ## A one-dimensional adaboost using a stump model as the weak learner
 
 Algorithm: A stump model, with weights
+
 Input: A set of data 
 1. Search for a splitting rule that will maximize the weighted reduction of Gini impurity.
 2. Calculate the left and the right node weighted predictions respectively.
+
 Output: The cutting point c, and the mode predictions.
 
 ## Sliced inverse regression
