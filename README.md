@@ -2,7 +2,9 @@
 
 ## Lasso
 
-$89=X$
+```tex
+\sum_{x=0}^n f(x)
+```
 
 ## Support Vector Machine
 ## Nadaraya-Watson kernel regression estimator for a one dimensional problem
