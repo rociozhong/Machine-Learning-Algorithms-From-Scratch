@@ -209,7 +209,7 @@ zeta = boptim[(p + 1) + (1: 2*n)]
 
 
 
-################### question 1 (d) ########################
+###########################################
 # try on the real data
 # for south african heart disease 
 rm(list = ls())
