@@ -4,7 +4,7 @@
 
 ## Support Vector Machine
 1. I install the "quadprog" package and utilize the function "solve.QP" to solve SVM. The "solve.QP" function is trying to perform the minimizing problem.
-$$df$$
+![](http://latex.codecogs.com/gif.latex?%5Cmin)
 2. 
 
 ## Nadaraya-Watson kernel regression estimator for a one dimensional problem
